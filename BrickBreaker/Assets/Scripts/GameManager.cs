@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {   
@@ -11,6 +13,11 @@ public class GameManager : MonoBehaviour
     private Paddle Paddle;
     private Ball Ball;
     private Brick[] Bricks;
+
+    [SerializeField] TMP_Text scoreNumber;
+    [SerializeField] TMP_Text livesNumber;
+    [SerializeField] Image gameOverScreen;
+    [SerializeField] Image levelCompletedScreen;
 
     private void Awake()
     {
@@ -27,7 +34,8 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        scoreNumber.text = Score.ToString();
+        livesNumber.text = Lives.ToString();
     }
 
     /* Game Initialization */
@@ -55,6 +63,7 @@ public class GameManager : MonoBehaviour
         if(isLevelCompleted())
         {
             //TODO:
+            levelCompletedScreen.gameObject.SetActive(true);
         }
     }
 
@@ -63,9 +72,10 @@ public class GameManager : MonoBehaviour
     {
         this.Lives--;
 
-        if (Lives < 0)
+        if (Lives <= 0)
         {
             //TODO::GameOver
+            gameOverScreen.gameObject.SetActive(true);
         }
         else
         {
@@ -88,5 +98,10 @@ public class GameManager : MonoBehaviour
         if (Bricks.Length <= 0)
             return true;
         return false;
+    }
+
+    public void ReloadGame()
+    {
+        SceneManager.LoadScene("Global");
     }
 }
