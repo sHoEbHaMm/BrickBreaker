@@ -361,6 +361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 30
+  maxBounceAngle: 75
 --- !u!1 &41031016
 GameObject:
   m_ObjectHideFlags: 0
@@ -1049,7 +1050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f57ec0893c0c8a04fbad9b23fa8075db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 500
+  movementSpeed: 700
 --- !u!1001 &778145962
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     [Tooltip("Speed at which the ball moves")]
-    [SerializeField] private float movementSpeed = 500f;
+    [SerializeField] private float movementSpeed = 700f;
 
     [HideInInspector] public new Rigidbody2D rigidbody2D { get; private set; } //this rigidbody has a public getter but a private setter. Means no other class can modify it
 
