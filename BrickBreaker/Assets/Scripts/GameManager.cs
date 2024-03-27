@@ -8,11 +8,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int Score = 0;
     [SerializeField] private int Lives = 3;
     [SerializeField] private int Level = 1;
+    private Paddle Paddle;
+    private Ball Ball;
+    private Brick[] Bricks;
 
     private void Awake()
     {
         /* This will avoid the gamemanager object from destroying when we load & unload scenes as per our need */
         DontDestroyOnLoad(this.gameObject);
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
     // Start is called before the first frame update
     void Start()
@@ -26,6 +30,7 @@ public class GameManager : MonoBehaviour
         
     }
 
+    /* Game Initialization */
     private void StartGame()
     {
         this.Score = 0;
@@ -40,5 +45,48 @@ public class GameManager : MonoBehaviour
     {
         this.Level = _level;
         SceneManager.LoadScene("Level" + _level);
+    }
+
+    /* Handles the score increment */
+    public void IncreaseScore(Brick brick)
+    {
+        this.Score += brick.Points;
+
+        if(isLevelCompleted())
+        {
+            //TODO:
+        }
+    }
+
+    /* Handles the decrement of lives and resetting the ball and paddle after every live lost */
+    public void ReduceLives()
+    {
+        this.Lives--;
+
+        if (Lives < 0)
+        {
+            //TODO::GameOver
+        }
+        else
+        {
+            this.Paddle.ResetPaddle();
+            this.Ball.ResetBall();
+        }
+    }
+
+    /* Get the paddle, ball and bricks from active scene */
+    public void OnSceneLoaded(Scene activeScene, LoadSceneMode mode)
+    {
+        Paddle = FindObjectOfType<Paddle>();
+        Ball = FindObjectOfType<Ball>();
+        Bricks = FindObjectsOfType<Brick>();
+    }
+
+    /* Checks if all the bricks in the level are destroyed. If yes, returnss true, else returns false */
+    public bool isLevelCompleted()
+    {
+        if (Bricks.Length <= 0)
+            return true;
+        return false;
     }
 }

@@ -8,15 +8,18 @@ public class Ball : MonoBehaviour
     [SerializeField] private float movementSpeed = 700f;
 
     [HideInInspector] public new Rigidbody2D rigidbody2D { get; private set; } //this rigidbody has a public getter but a private setter. Means no other class can modify it
+    private GameManager gameManager;
 
     private void Awake()
     {
         this.rigidbody2D = GetComponent<Rigidbody2D>();
     }
+
     // Start is called before the first frame update
     void Start()
     {
-        Invoke(nameof(SetRandomTrajectory), 1.5f);
+        gameManager = FindObjectOfType<GameManager>();
+        ResetBall();
     }
 
     // Update is called once per frame
@@ -33,5 +36,31 @@ public class Ball : MonoBehaviour
         direction.y = -1f; //Set the Y-component of the direction vector
 
         this.rigidbody2D.AddForce(direction.normalized * this.movementSpeed); //normalize it because we only care about direction not magnitude
+    }
+
+    /* Called whenever the ball collides with any gameobject in the scene
+     If brick is hit, reduces the health of that brick and increments the score via GameManager
+     If the ball misses the paddle and hits ground, total lives are reduced via GameManager */
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Brick brick = collision.gameObject.GetComponent<Brick>();
+
+        if(brick)
+        {
+            brick.DecreaseHealth();
+            gameManager.IncreaseScore(brick);
+        }
+        else if(collision.gameObject.tag == "DeathWall")
+        {
+            gameManager.ReduceLives();
+        }
+    }
+
+    /* Resets the position and velocity of the ball */
+    public void ResetBall()
+    {
+        this.transform.position = Vector2.zero;
+        this.rigidbody2D.velocity = Vector2.zero;
+        Invoke(nameof(SetRandomTrajectory), 1.5f);
     }
 }

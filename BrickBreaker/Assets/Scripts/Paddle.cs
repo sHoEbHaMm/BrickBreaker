@@ -85,4 +85,11 @@ public class Paddle : MonoBehaviour
             ball.rigidbody2D.velocity = newRotation * Vector2.up * ball.rigidbody2D.velocity.magnitude;
         }
     }
+
+    /* Resets the position and velocity of the paddle */
+    public void ResetPaddle()
+    {
+        this.transform.position = new Vector2(0f, this.transform.position.y);
+        this.rigidbody2D.velocity = Vector2.zero;
+    }
 }
