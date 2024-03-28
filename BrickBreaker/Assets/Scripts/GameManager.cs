@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+
         scoreNumber.text = Score.ToString();
         livesNumber.text = Lives.ToString();
     }
@@ -44,6 +49,8 @@ public class GameManager : MonoBehaviour
         this.Score = 0;
         this.Lives = 3;
         LoadLevel(1);
+        gameOverScreen.gameObject.SetActive(false);
+        levelCompletedScreen.gameObject.SetActive(false);
     }
 
 
@@ -59,7 +66,6 @@ public class GameManager : MonoBehaviour
     public void IncreaseScore(Brick brick)
     {
         this.Score += brick.Points;
-
         if(isLevelCompleted())
         {
             levelCompletedScreen.gameObject.SetActive(true); // Loads the level completed UI
@@ -95,9 +101,14 @@ public class GameManager : MonoBehaviour
     /* Checks if all the bricks in the level are destroyed. If yes, returnss true, else returns false */
     public bool isLevelCompleted()
     {
-        if (Bricks.Length <= 0)
-            return true;
-        return false;
+        for (int i = 0; i < this.Bricks.Length; i++)
+        {
+            if (this.Bricks[i].gameObject.activeInHierarchy)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 }

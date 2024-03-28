@@ -41,7 +41,7 @@ public class Brick : MonoBehaviour
 
         if (this.Health <= 0f)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
         else
         {
