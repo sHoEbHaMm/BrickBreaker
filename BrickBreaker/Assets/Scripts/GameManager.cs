@@ -62,8 +62,8 @@ public class GameManager : MonoBehaviour
 
         if(isLevelCompleted())
         {
-            //TODO:
-            levelCompletedScreen.gameObject.SetActive(true);
+            levelCompletedScreen.gameObject.SetActive(true); // Loads the level completed UI
+            Invoke(nameof(StartGame), 2f); // Waits for 2 secs before restarting the game
         }
     }
 
@@ -72,10 +72,10 @@ public class GameManager : MonoBehaviour
     {
         this.Lives--;
 
-        if (Lives <= 0)
+        if (Lives <= 0) 
         {
-            //TODO::GameOver
-            gameOverScreen.gameObject.SetActive(true);
+            gameOverScreen.gameObject.SetActive(true); // Loads the game over UI
+            Invoke(nameof(StartGame), 2f); // Waits for 2 secs before restarting the game
         }
         else
         {
@@ -100,8 +100,4 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void ReloadGame()
-    {
-        SceneManager.LoadScene("Global");
-    }
 }

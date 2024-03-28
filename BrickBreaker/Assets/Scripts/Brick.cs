@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
+    [Tooltip("Health of the brick")]
     [SerializeField] public int Health;
     [HideInInspector] public SpriteRenderer spriteRenderer { get; private set; }
+    [Tooltip("Different states of bricks in form of different sprites")]
     [SerializeField] public Sprite[] brickStates;
     [HideInInspector] public int Points = 100;
 
